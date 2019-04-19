@@ -1,11 +1,9 @@
 # lem-in
 
-![grade](https://i.imgur.com/FW5Sd6I.png "125 / 100")
-
 This project was completed in april 2019 as part of the 42 school cursus. The goal was to create a program that can find the most efficient paths from a starting to an end point.
 The detailed instructions can be found in the **instructions/Subject.pdf** file.
 
-![path to lem-in](https://imgur.com/iHWYv6I "Inner circle > Algo branch > ft_printf > push_swap > lem-in")
+![path to lem-in](https://i.imgur.com/iHWYv6I.png "Inner circle > Algo branch > ft_printf > push_swap > lem-in")
 
 *Graph course, deep algorithms*
 
