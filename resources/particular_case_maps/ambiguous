@@ -1,0 +1,10 @@
+100
+##start
+leo 0 0
+##end
+lea 1 1
+leo-lea 2 2
+lea-leo 3 3
+leo-lea
+lea-leo
+leo-lea-leo

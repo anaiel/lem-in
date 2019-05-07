@@ -1,0 +1,34 @@
+if [ "$#" -ne 2 ] || ! [ "$2" -eq "$2" ] 2> /dev/null
+then
+	echo "usage: ./time_check [flow-one/flow-ten/flow-thousand/big/big-superposition] [number of tests]"
+	exit 0
+fi
+
+printf "[ "
+
+TIME="$(./generator --$1 | (time ../lem-in --silent) 2>&1 | grep user | cut -f 2 | cut -c3- | rev | cut -c2- | rev)"
+MEAN=$TIME
+MAX=$TIME
+MIN=$TIME
+NB=$2
+printf "\033[0;32m✓ \033[0m"
+
+while [[ $NB > 1 ]]
+do
+	TIME="$(./generator --$1 | (time ../lem-in --silent) 2>&1 | grep user | cut -f 2 | cut -c3- | rev | cut -c2- | rev)"
+	MEAN=$(bc -l <<< "( $MEAN + $TIME ) / 2")
+	if [[ $(bc -l <<< "$MAX < $TIME") = 1 ]]
+	then
+		MAX=$TIME
+	fi
+	if [[ $(bc -l <<< "$MIN > $TIME") = 1 ]]
+	then
+		MIN=$TIME
+	fi
+	NB=$((NB-1))
+	printf "\033[0;32m✓ \033[0m"
+done
+echo "]"
+echo "$1:"
+printf "\tmean:\t%.3f\n" $MEAN
+echo "\tmax:\t$MAX\n\tmin:\t$MIN"
