@@ -6,7 +6,7 @@
 /*   By: dtrigalo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 14:23:40 by dtrigalo          #+#    #+#             */
-/*   Updated: 2019/05/07 16:48:31 by anleclab         ###   ########.fr       */
+/*   Updated: 2019/05/07 17:29:17 by anleclab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,23 @@ void	set_scale(t_lem *lem)
 		tmp = (WIDTH - 2 * MARGIN) / (lem->x_max - lem->x_min);
 	else
 		tmp = 0;
-	if ((lem->scale == 0 && tmp) || tmp < lem->scale)
+	if (lem->scale == 0 && tmp == 0)
+	{
+		lem->scale = 1;
+		lem->x_offset = WIDTH / 2;
+		lem->y_offset = HEIGHT / 2;
+	}
+	else if (lem->scale == 0 || tmp < lem->scale)
 	{
 		lem->scale = tmp;
 		lem->x_offset = MARGIN;
-		lem->y_offset = (HEIGHT - MARGIN - lem->scale * (lem->y_max
-					- lem->y_min)) / 2;
-	}
-	else if (tmp == 0 && lem->scale)
-	{
-		lem->y_offset = MARGIN;
-		lem->x_offset = (WIDTH - MARGIN - lem->scale * (lem->x_max
-					- lem->x_min)) / 2;
+		lem->y_offset = (lem->y_max == lem->y_min) ? HEIGHT / 2 : (HEIGHT
+				- MARGIN - lem->scale * (lem->y_max - lem->y_min)) / 2;
 	}
 	else
-		lem->scale = 1;
+	{
+		lem->y_offset = MARGIN;
+		lem->x_offset = (lem->x_min == lem->x_max) ? WIDTH / 2 : (WIDTH
+				- MARGIN - lem->scale * (lem->x_max	- lem->x_min)) / 2;
+	}
 }
